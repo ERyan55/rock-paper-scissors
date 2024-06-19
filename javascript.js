@@ -1,3 +1,8 @@
+// Variable declarations
+let humanScore = 0;
+let computerScore = 0;
+
+// Function declarations
 function getComputerChoice() {
   let val = Math.random();
   if (val < 0.33) {
