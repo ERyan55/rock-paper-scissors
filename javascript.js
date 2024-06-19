@@ -1,7 +1,3 @@
-// Variable declarations
-let humanScore = 0;
-let computerScore = 0;
-
 // Function declarations
 function getComputerChoice() {
   let val = Math.random();
@@ -19,22 +15,37 @@ function getHumanChoice() {
   return choice.toLowerCase();
 }
 
-function playRound(humanChoice, computerChoice) {
-  if (humanChoice === computerChoice) {
-    return `both players chose ${humanChoice}, try again.`;
+function playGame() {
+  // Variable declarations
+  let humanScore = 0;
+  let computerScore = 0;
+
+  // function declarations
+  function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+      console.log(`both players chose ${humanChoice}, try again.`);
+    } else if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "scissors" && computerChoice === "paper") ||
+      (humanChoice === "paper" && computerChoice === "rock")
+    ) {
+      humanScore++;
+      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+    } else {
+      computerScore++;
+      console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+    }
   }
-  if (
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "scissors" && computerChoice === "paper") ||
-    (humanChoice === "paper" && computerChoice === "rock")
-  ) {
-    humanScore++;
-    return `You win! ${humanChoice} beats ${computerChoice}.`;
+
+  while (humanScore < 5 && computerScore < 5) {
+    playRound(getHumanChoice(), getComputerChoice());
+  }
+  if (humanScore === 5) {
+    console.log("You won it all!");
   } else {
-    computerScore++;
-    return `You lose! ${computerChoice} beats ${humanChoice}.`;
+    console.log("You lost, better luck next time!");
   }
 }
 
 // Main method
-console.log(playRound(getHumanChoice(), getComputerChoice()));
+playGame();
