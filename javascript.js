@@ -6,11 +6,11 @@ let computerScore = 0;
 function getComputerChoice() {
   let val = Math.random();
   if (val < 0.33) {
-    return "Rock";
+    return "rock";
   } else if (val < 0.66) {
-    return "Paper";
+    return "paper";
   } else {
-    return "Scissors";
+    return "scissors";
   }
 }
 
@@ -19,6 +19,22 @@ function getHumanChoice() {
   return choice.toLowerCase();
 }
 
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+    return `both players chose ${humanChoice}, try again.`;
+  }
+  if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "scissors" && computerChoice === "paper") ||
+    (humanChoice === "paper" && computerChoice === "rock")
+  ) {
+    humanScore++;
+    return `You win! ${humanChoice} beats ${computerChoice}.`;
+  } else {
+    computerScore++;
+    return `You lose! ${computerChoice} beats ${humanChoice}.`;
+  }
+}
+
 // Main method
-getComputerChoice();
-getHumanChoice();
+console.log(playRound(getHumanChoice(), getComputerChoice()));
