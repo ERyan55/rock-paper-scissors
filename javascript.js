@@ -1,3 +1,8 @@
+// Variable initializations
+let humanScore = 0;
+let computerScore = 0;
+const text = document.querySelector("#text");
+
 // Function declarations
 function getComputerChoice() {
   let val = Math.random();
@@ -15,37 +20,44 @@ function getHumanChoice() {
   return choice.toLowerCase();
 }
 
-function playGame() {
-  // Variable declarations
-  let humanScore = 0;
-  let computerScore = 0;
-
-  // function declarations
-  function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-      console.log(`both players chose ${humanChoice}, try again.`);
-    } else if (
-      (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "scissors" && computerChoice === "paper") ||
-      (humanChoice === "paper" && computerChoice === "rock")
-    ) {
-      humanScore++;
-      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-    } else {
-      computerScore++;
-      console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-    }
-  }
-
-  while (humanScore < 5 && computerScore < 5) {
-    playRound(getHumanChoice(), getComputerChoice());
+// Increments score based on winner
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+    text.textContent = `Both players chose ${humanChoice}. The score is still ${humanScore} - ${computerScore}.`;
+    document.body.appendChild(text);
+  } else if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "scissors" && computerChoice === "paper") ||
+    (humanChoice === "paper" && computerChoice === "rock")
+  ) {
+    humanScore++;
+    text.textContent = `You win, ${humanChoice} beats ${computerChoice}. The score is ${humanScore} - ${computerScore}`;
+    document.body.appendChild(text);
+  } else {
+    computerScore++;
+    text.textContent = `You lose, ${humanChoice} loses to ${computerChoice}. The score is ${humanScore} - ${computerScore}`;
+    document.body.appendChild(text);
   }
   if (humanScore === 5) {
-    console.log("You won it all!");
-  } else {
-    console.log("You lost, better luck next time!");
+    text.textContent = "You win it all!";
+    document.body.appendChild(text);
+  }
+  if (computerScore === 5) {
+    text.textContent = "You lost, better luck next time!";
+    document.body.appendChild(text);
   }
 }
 
-// Main method
-playGame();
+// Update points based on button selection
+const rockButton = document.querySelector("#rock");
+rockButton.addEventListener("click", () =>
+  playRound("rock", getComputerChoice())
+);
+const paperButton = document.querySelector("#paper");
+paperButton.addEventListener("click", () =>
+  playRound("paper", getComputerChoice())
+);
+const scissorsButton = document.querySelector("#scissors");
+scissorsButton.addEventListener("click", () =>
+  playRound("scissors", getComputerChoice())
+);
